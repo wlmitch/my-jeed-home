@@ -20,7 +20,7 @@
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mjh extends eqLogic {
-  
+
   public static function dependancy_info() {
     $return = array();
     $return['log'] = 'mjh_dep';
@@ -30,7 +30,7 @@ class mjh extends eqLogic {
   }
 
 	public static function dependancy_install() {
-		log::add('mjh_dep', 'info', 'Dependency install');
+		log::add('mjh', 'info', 'Dependency install');
 	}
 
   public static function deamon_info() {
