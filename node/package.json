@@ -1,0 +1,26 @@
+{
+	"name": "MyJeedHomeBus",
+	"version": "1.0.0",
+	"private": true,
+	"description": "",
+	"author": {
+		"name": "Alexandre Jannotta"
+	},
+	"keywords": [
+		"Jeedom",
+		"Myhome",
+		"Legrand"
+	],
+	"maintainers": [
+		{
+			"name": "Alexandre Jannotta",
+			"email": "wlmitch@gmail.com"
+		}
+	],
+	"dependencies": {
+		"minimist": "*",
+		"simple-node-logger": "*",
+		"jsonfile": "*",
+		"request": "*"
+	}
+}
