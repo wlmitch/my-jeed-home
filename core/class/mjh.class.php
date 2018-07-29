@@ -19,7 +19,7 @@
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
-class MyJeedHome extends eqLogic {
+class mjh extends eqLogic {
     /*     * *************************Attributs****************************** */
     /*     * ***********************Methode static*************************** */
 
@@ -103,7 +103,7 @@ class MyJeedHome extends eqLogic {
     /*     * **********************Getteur Setteur*************************** */
 }
 
-class MyJeedHomeCmd extends cmd {
+class mjhCmd extends cmd {
     /*     * *************************Attributs****************************** */
 
 
