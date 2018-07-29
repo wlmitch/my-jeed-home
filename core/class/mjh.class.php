@@ -24,8 +24,13 @@ class mjh extends eqLogic {
   public static function dependancy_info() {
     $return = array();
     $return['log'] = 'mjh_dep';
-    $return['state'] = 'ok';
     $return['progress_file'] = '/tmp/dependency_mjh_in_progress';
+
+    if (is_dir(realpath(dirname(__FILE__) . '/../../node/node_modules'))) {
+      $return['state'] = 'ok';
+    } else {
+      $return['state'] = 'nok';
+    }
 
     return $return;
   }
