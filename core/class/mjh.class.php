@@ -63,9 +63,9 @@ class mjh extends eqLogic {
 
     $path = realpath(dirname(__FILE__) . '/../../node/deamon.js');
     $serverPort = config::byKey('serverPort', 'mjh', 55006);
-    $gatewayAddress = config::byKey('serverPort', 'mjh', '12345');
-    $gatewayPort = config::byKey('serverPort', 'mjh', '12345');
-    $gatewayPassword = config::byKey('serverPort', 'mjh', '12345');
+    $gatewayAddress = config::byKey('gatewayAddress', 'mjh', '192.168.1.35');
+    $gatewayPort = config::byKey('gatewayPort', 'mjh', '20000');
+    $gatewayPassword = config::byKey('gatewayPassword', 'mjh', '12345');
     $cmd = 'nice -n 19 nodejs ' . $path .
         ' --serverPort=' . $serverPort .
         ' --gatewayAddress=' . $gatewayAddress .
