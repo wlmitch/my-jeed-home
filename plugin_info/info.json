@@ -1,5 +1,5 @@
 {
-	"id" : "my-jeed-home",
+	"id" : "mjh",
 	"name" : "MyJeedHome",
 	"description" : "Plugin for managing a Legrand MyHome installation",
 	"licence" : "AGPL",
@@ -10,10 +10,6 @@
 	"hasOwnDeamon" : true,
 	"changelog" : "",
 	"documentation" : "",
-	"link" : {
-		"forum":"Lien vers le forum",
-		"video" : "Lien vers une video",
-	},
 	"language" : ["fr_FR","en_US"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"]
 }
