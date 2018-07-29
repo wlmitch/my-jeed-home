@@ -32,8 +32,9 @@ class mjh extends eqLogic {
 
 	public static function dependancy_install() {
     log::remove(__CLASS__ . '_dep');
+    $folder = dirname(__FILE__) . '/../..';
 		return array(
-      'script' => dirname(__FILE__) . '/../../resources/install.sh',
+      'script' => $folder . '/resources/install.sh ' . $folder,
       'log' => log::getPathToLog(__CLASS__ . '_dep')
     );
 	}

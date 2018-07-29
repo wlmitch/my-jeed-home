@@ -8,7 +8,7 @@ sudo apt-get install -y nodejs
 echo 50 > /tmp/dependency_mjh_in_progress
 
 echo 'Try to install node modules'
-cd ../node/
+cd $1/node
 sudo rm -rf node_modules
 sudo npm install
 
