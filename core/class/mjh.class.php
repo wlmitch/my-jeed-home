@@ -25,12 +25,16 @@ class mjh extends eqLogic {
     $return = array();
     $return['log'] = 'mjh_dep';
     $return['state'] = 'ok';
+    $return['progress_file'] = '/tmp/dependency_mjh_in_progress';
 
     return $return;
   }
 
 	public static function dependancy_install() {
-		log::add('mjh', 'info', 'Dependency install');
+		return array(
+      'script' => dirname(__FILE__) . '/../../resources/install.sh',
+      'log' => log::getPathToLog(__CLASS__ . '_dep')
+    );
 	}
 
   public static function deamon_info() {
