@@ -20,31 +20,33 @@
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class mjh extends eqLogic {
-    /*     * *************************Attributs****************************** */
-    /*     * ***********************Methode static*************************** */
+  
+  public static function dependancy_info() {
+    $return = array();
+    $return['log'] = 'mjh_dep';
+    $return['state'] = 'nok';
 
-    public static function dependancy_info() {
-      $return = array();
-      $return['log'] = 'mjh_dep';
+    return $return;
+  }
+
+	public static function dependancy_install() {
+		log::add('mjh_dep', 'info', 'Dependency install');
+	}
+
+  public static function deamon_info() {
+    $return = array();
+    $return['log'] = 'mjh';
+    $return['launchable'] = 'ok';
+
+    $pid = trim(shell_exec('ps ax | grep "mjh/node/deamon.js" | grep -v "grep" | wc -l'));
+    if ($pid != '' && $pid != '0') {
+      $return['state'] = 'ok';
+    } else {
       $return['state'] = 'nok';
-
-      return $return;
     }
 
-    public static function deamon_info() {
-      $return = array();
-      $return['log'] = 'mjh';
-      $return['launchable'] = 'ok';
-
-      $pid = trim(shell_exec('ps ax | grep "mjh/node/deamon.js" | grep -v "grep" | wc -l'));
-      if ($pid != '' && $pid != '0') {
-        $return['state'] = 'ok';
-      } else {
-        $return['state'] = 'nok';
-      }
-
-      return $return;
-    }
+    return $return;
+  }
 
     /*     * *********************Méthodes d'instance************************* */
 
