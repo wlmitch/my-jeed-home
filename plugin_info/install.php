@@ -19,7 +19,7 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function mjh_install() {
-
+  log::add('mjh', 'debug', 'Installation du plugin MyJeedHome');
 }
 
 function mjh_update() {
