@@ -23,29 +23,18 @@ class mjh extends eqLogic {
     /*     * *************************Attributs****************************** */
     /*     * ***********************Methode static*************************** */
 
-    /*
-     * Fonction exécutée automatiquement toutes les minutes par Jeedom
-      public static function cron() {
+    public static function deamon_info() {
+      $return = array();
+      $return['log'] = 'mjh';
+      $return['launchable'] = 'ok';
 
+      $pid = trim(shell_exec('ps ax | grep "mjh/node/deamon.js" | grep -v "grep" | wc -l'));
+      if ($pid != '' && $pid != '0') {
+        $return['state'] = 'ok';
+      } else {
+        $return['state'] = 'nok';
       }
-     */
-
-
-    /*
-     * Fonction exécutée automatiquement toutes les heures par Jeedom
-      public static function cronHourly() {
-
-      }
-     */
-
-    /*
-     * Fonction exécutée automatiquement tous les jours par Jeedom
-      public static function cronDaily() {
-
-      }
-     */
-
-
+    }
 
     /*     * *********************Méthodes d'instance************************* */
 
