@@ -82,6 +82,10 @@ class Deamon {
 		let gatewayConfig = new myHome.GatewayConfig(argv['gatewayPort'], argv['gatewayAddress'], argv['gatewayPassword']);
 		this.gateway = new myHome.Gateway(gatewayConfig);
 		this.gateway.on('event', (data) => this.processEvent(data));
+		this.gateway.on('error', (message) => {
+			LOGGER.debug('[DEAMON] Gateway error : ' + message);
+			this.stop();
+		});
 		this.gateway.open();
 	}
 

@@ -65,6 +65,7 @@ class Gateway extends EventEmitter {
 		this.eventSocket.on('connected', () => LOGGER.info('[MYHOME] Gateway opened'));
 		this.eventSocket.on('data', (data) => this.emit('event', data));
 		this.eventSocket.on('closed', () => LOGGER.info('[MYHOME] Gateway closed'));
+		this.eventSocket.on('error', (message) => this.emit('error', message));
 		this.eventSocket.open();
 	}
 
@@ -109,8 +110,15 @@ class GatewaySocket extends EventEmitter {
 		this.socket.on('data', (buffer) => this.read(buffer));
 		this.socket.on('close', () => {
 			LOGGER.trace('[MYHOME][' + this.mode + '] Socket closed');
+			let previousStatus = this.status;
 			this.status = STATUS_DISCONNECTED;
-			this.emit('closed');
+			if (previousStatus == STATUS_CONNECTED) {
+				this.emit('closed');
+			} else if (previousStatus == STATUS_AUTHENTICATING) {
+				this.emit('error', 'authentification error');
+			} else {
+				this.emit('error', 'unknown error');
+			}
 		});
 		this.socket.on('error', (error) => {
 			LOGGER.error('[MYHOME][' + this.mode + '] Socket error');
