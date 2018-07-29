@@ -23,6 +23,14 @@ class mjh extends eqLogic {
     /*     * *************************Attributs****************************** */
     /*     * ***********************Methode static*************************** */
 
+    public static function dependancy_info() {
+      $return = array();
+      $return['log'] = 'mjh_dep';
+      $return['state'] = 'nok';
+
+      return $return;
+    }
+
     public static function deamon_info() {
       $return = array();
       $return['log'] = 'mjh';
@@ -34,6 +42,8 @@ class mjh extends eqLogic {
       } else {
         $return['state'] = 'nok';
       }
+
+      return $return;
     }
 
     /*     * *********************Méthodes d'instance************************* */
@@ -69,25 +79,6 @@ class mjh extends eqLogic {
     public function postRemove() {
 
     }
-
-    /*
-     * Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
-      public function toHtml($_version = 'dashboard') {
-
-      }
-     */
-
-    /*
-     * Non obligatoire mais ca permet de déclencher une action après modification de variable de configuration
-    public static function postConfig_<Variable>() {
-    }
-     */
-
-    /*
-     * Non obligatoire mais ca permet de déclencher une action avant modification de variable de configuration
-    public static function preConfig_<Variable>() {
-    }
-     */
 
     /*     * **********************Getteur Setteur*************************** */
 }
