@@ -136,7 +136,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 							<th style="width: 50px;">#</th>
 							<th style="width: 230px;">{{Nom}}</th>
 							<th style="width: 100px;">{{Type}}</th>
-							<th>{{Valeur}}</th>
+							<th>{{Commande & Info retour}}</th>
 							<th style="width: 200px;">{{Paramètres}}</th>
 							<th style="width: 80px;"></th>
 						</tr>
