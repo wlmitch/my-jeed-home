@@ -9,7 +9,7 @@
       <input class="cmdAttr form-control input-sm" data-l1key="name" style="width : 140px;" placeholder="{{Nom}}">
     </td>
     <td>
-      <span class="type" type="[[type]]">[[$types]]</span>
+      <span class="type" type="[[type]]">[[&types]]</span>
       <span class="subType" subType="[[subType]]"></span>
     </td>
     <td>
