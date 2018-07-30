@@ -28,7 +28,8 @@
     </td>
     <td>
       <div class="form-group">
-          <label class="checkbox"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
+          <label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
+          <label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>
       </div>
       <div class="form-group input-group">
         <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width : 50%;" />
