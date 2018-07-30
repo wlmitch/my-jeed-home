@@ -20,6 +20,9 @@
       <div class="form-group">
           <label class="checkbox"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
       </div>
+      <div class="form-group">
+          <input class="cmdAttr form-control input-sm" data-l1key="unite" placeholder="{{Unité}}">
+      </div>
       <div class="form-group input-group">
         <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width : 50%;" />
         <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width : 50%;" />
