@@ -14,7 +14,14 @@
       <div class="form-group subType" subType="[[subType]]"></div>
     </td>
     <td>
-      Valeur
+      <!-- Commande -->
+      <div class="form-group">
+        <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}" style="margin-bottom : 5px;width : 50%; display : inline-block;" />
+      </div>
+      <!-- Info (pour le retour d'état) -->
+      <div class="form-group">
+        <select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" title="Information à mettre à jour">
+      </div>
     </td>
     <td>
       <div class="form-group">
