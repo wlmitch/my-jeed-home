@@ -138,7 +138,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 							<th style="width: 100px;">{{Type}}</th>
 							<th>{{Valeur}}</th>
 							<th style="width: 200px;">{{Paramètres}}</th>
-							<th style="width: 50px;"></th>
+							<th style="width: 80px;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -151,5 +151,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 
 </div>
 
+<?php include_file('3rdparty', 'mustache', 'js', 'mjh');?>
 <?php include_file('desktop', 'mjh', 'js', 'mjh');?>
 <?php include_file('core', 'plugin.template', 'js');?>
