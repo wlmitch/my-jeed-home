@@ -155,4 +155,4 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 <?php include_file('desktop', 'mjh', 'js', 'mjh');?>
 <?php include_file('core', 'plugin.template', 'js');?>
 
-<?php include __DIR__ . 'command.php' ?>
+<?php include __DIR__ . '/command.php' ?>
