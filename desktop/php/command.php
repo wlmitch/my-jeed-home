@@ -16,7 +16,7 @@
     <td>
       <!-- Commande -->
       <div class="form-group">
-        <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}" style="margin-bottom : 5px;width : 50%; display : inline-block;" />
+        <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}"/>
       </div>
       <!-- Info (pour le retour d'état) -->
       <div class="form-group">
