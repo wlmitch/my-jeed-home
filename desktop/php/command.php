@@ -5,21 +5,25 @@
       <span class="cmdAttr" data-l1key="id"></span>
     </td>
     <td>
-      <span class="cmdAttr" data-l1key="id" style="display:none;"></span>
-      <input class="cmdAttr form-control input-sm" data-l1key="name" style="width : 140px;" placeholder="{{Nom}}">
+      <div class="form-group">
+        <input class="cmdAttr form-control input-sm" data-l1key="name" style="width : 140px;" placeholder="{{Nom}}">
+      </div>
     </td>
     <td>
-      <span class="type" type="[[type]]">[[&types]]</span>
-      <span class="subType" subType="[[subType]]"></span>
+      <div class="form-group type" type="[[type]]">[[&types]]</div>
+      <div class="form-group subType" subType="[[subType]]"></div>
     </td>
     <td>
       Valeur
     </td>
     <td>
-      <span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span>
-      <input class="tooltips cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="listValue" placeholder="{{Liste de valeur|texte séparé par ;}}" title="{{Liste}}" style="margin-top : 5px;">
-      <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width : 40%;display : inline-block;" />
-      <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width : 40%;display : inline-block;" />
+      <div class="form-group">
+          <label class="checkbox"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
+      </div>
+      <div class="form-group input-group">
+        <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width : 40%;display : inline-block;" />
+        <input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width : 40%;display : inline-block;" />
+      </div>
     </td>
     <td>
       <div class="btn-group">
