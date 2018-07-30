@@ -9,7 +9,8 @@
         <input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom}}">
       </div>
       <div class="form-group">
-          <label class="checkbox"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
+          <label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
+          <label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>
       </div>
     </td>
     <td>
@@ -24,7 +25,6 @@
       <!-- Info (pour le retour d'état) -->
       <div class="form-group">
         <select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" title="Information à mettre à jour">
-        <label class="checkbox"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>
       </div>
     </td>
     <td>
