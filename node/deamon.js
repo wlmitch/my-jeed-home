@@ -111,7 +111,7 @@ class Deamon {
 
 		request({
 				method: 'POST',
-				url: 'http://' + argv['apiAddress'] + '/plugins/mjh/core/php/mjh.php?apiKey=' + argv['apiKey'];
+				url: 'http://' + argv['apiAddress'] + '/plugins/mjh/core/php/mjh.php?apiKey=' + argv['apiKey'],
 				json: true,
 				body: body
 			}, (error, response, body) => {
