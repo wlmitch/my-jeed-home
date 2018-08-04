@@ -24,7 +24,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
  *
  */
 
-if (!jeedom::apiAccess(init('apikey'), 'mjh')) {
+if (!jeedom::apiAccess(init('apiKey'), 'mjh')) {
   log::add('mjh', 'error', "Unauthorized access");
   header("HTTP/1.1 401 Unauthorized");
   exit;

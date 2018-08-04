@@ -5,7 +5,7 @@ const argv = require('minimist')(process.argv, {
 		gatewayAddress: '192.168.1.35',
 		gatewayPassword: '12345',
 		apiAddress: '127.0.0.1',
-		apikey: '000000'
+		apiKey: '000000'
 	}
 });
 if (argv.level) {
@@ -111,7 +111,7 @@ class Deamon {
 
 		request({
 				method: 'POST',
-				url: 'http://' + argv['apiAddress'] + '/plugins/mjh/core/php/mjh.php?apikey=' + argv['apikey'];
+				url: 'http://' + argv['apiAddress'] + '/plugins/mjh/core/php/mjh.php?apiKey=' + argv['apiKey'];
 				json: true,
 				body: body
 			}, (error, response, body) => {
