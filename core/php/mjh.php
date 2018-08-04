@@ -20,7 +20,22 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 /*
  * Non obligatoire mais peut être utilisé si vous voulez charger en même temps que votre
  * plugin des librairies externes (ne pas oublier d'adapter plugin_info/info.xml).
- * 
- * 
+ *
+ *
  */
 
+if (!jeedom::apiAccess(init('apikey'), 'mjh')) {
+  log::add('mjh', 'error', "Unauthorized access");
+  header("HTTP/1.1 401 Unauthorized");
+  exit;
+}
+
+if (!$_POST) {
+  log::add('mjh', 'error', "Bad request");
+  header("HTTP/1.1 405 Method Not Allowed");
+  exit;
+}
+
+$data = json_decode(file_get_contents('php://input'), true);
+
+echo $data;
