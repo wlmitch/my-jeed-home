@@ -3,7 +3,9 @@ const argv = require('minimist')(process.argv, {
 		serverPort: 55006,
 		gatewayPort: 20000,
 		gatewayAddress: '192.168.1.35',
-		gatewayPassword: '12345'
+		gatewayPassword: '12345',
+		apiAddress: '127.0.0.1',
+		apikey: '000000'
 	}
 });
 if (argv.level) {
@@ -102,6 +104,23 @@ class Deamon {
 	processEvent(data) {
 		LOGGER.trace('[DAEMON] Event : ' + data);
 		translator.toJson(data);
+
+		let body = {
+			data: data
+		};
+
+		request({
+				method: 'POST',
+				url: 'http://' + argv['apiAddress'] + '/plugins/mjh/core/php/mjh.php?apikey=' + argv['apikey'];
+				json: true,
+				body: body
+			}, (error, response, body) => {
+			if(!error && response.statusCode == 200) {
+				LOGGER.debug('[DAEMON] Jeedom respond OK');
+			} else {
+				LOGGER.error('[DEAMON] Jeedom response : ' + response.statusCode + ' : ' + error);
+			}
+		});
 	}
 
 	stop() {
