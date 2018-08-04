@@ -51,7 +51,8 @@ class mjh extends eqLogic {
         ' --serverPort=' . $serverPort .
         ' --gatewayAddress=' . $gatewayAddress .
         ' --gatewayPort=' . $gatewayPort .
-        ' --gatewayPassword=' . $gatewayPassword;
+        ' --gatewayPassword=' . $gatewayPassword .
+        ' --apiKey=' . jeedom::getApiKey('mjh');
 
     $result = exec('sudo ' . $cmd . ' >> ' . log::getPathToLog('mjh_deamon') . ' 2>&1 &');
     if (strpos(strtolower($result), 'error') !== false || strpos(strtolower($result), 'traceback') !== false) {
