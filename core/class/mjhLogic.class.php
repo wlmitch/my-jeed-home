@@ -81,7 +81,7 @@ class mjh extends eqLogic {
     socket_close($socket);
   }
 
-  public static processEvent($data) {
+  public static function processEvent($data) {
     log::add('mjh', 'debug', 'Process event');
     log::add('mjh', 'debug', $data);
   }
