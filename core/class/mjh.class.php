@@ -18,5 +18,5 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__  . '/mjhLogic.inc.php';
-require_once __DIR__  . '/mjhCmd.inc.php';
+require_once __DIR__  . '/mjhLogic.class.php';
+require_once __DIR__  . '/mjhCmd.class.php';
