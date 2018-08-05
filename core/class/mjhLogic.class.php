@@ -111,7 +111,17 @@ class mjh extends eqLogic {
 
 	public static function processEvent($data) {
 		log::add('mjh', 'debug', 'Process event');
-		log::add('mjh', 'debug', $data);
+		log::add('mjh', 'debug', print_r($data, true));
+
+		$logicalId = $data['who'] . ':' . $data['where'];
+		$equipment = mjh::byLogicalId($logicalId, 'mjh');
+		if (!is_object($device)) {
+			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
+			return;
+		} else {
+			log::add('mjh', 'debug', print_r($equipment, true));
+		}
+
 	}
 
 	public function preSave() {
