@@ -74,11 +74,7 @@ class mjh extends eqLogic {
 
 	public static function deamon_stop() {
 		log::add('mjh', 'info', 'Deamon stop');
-
-		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-		socket_connect($socket, '127.0.0.1', config::byKey('serverPort', 'mjh', 55006));
-		socket_write($socket, 'shutdown', strlen('shutdown'));
-		socket_close($socket);
+		mjh::sendToDeamon('shutdown');
 	}
 
 	public static function findWhos() {
@@ -99,13 +95,24 @@ class mjh extends eqLogic {
 		return $return;
 	}
 
+	public static function sendCommand($cmd) {
+		mjh::sendToDeamon(json_encode(['command' => $cmd]));
+	}
+
+	public static function sendToDeamon($data) {
+		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		socket_connect($socket, '127.0.0.1', config::byKey('serverPort', 'mjh', 55006));
+		socket_write($socket, $data, strlen($data));
+		socket_close($socket);
+	}
+
 	public static function processEvent($data) {
 		log::add('mjh', 'debug', 'Process event');
 		log::add('mjh', 'debug', $data);
 	}
 
 	public function preSave() {
-		$device = $this->getConfiguration('device');
+		$who = $this->getConfiguration('who');
 	}
 
 }
