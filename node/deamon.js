@@ -8,7 +8,7 @@ const argv = require('minimist')(process.argv, {
 		apiKey: '000000'
 	}
 });
-if (argv.level) {
+if (argv.logLevel) {
 	process.env.LOG_LEVEL = argv.logLevel;
 } else {
 	process.env.LOG_LEVEL = 'debug';
