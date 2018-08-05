@@ -27,6 +27,12 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-sm-3 control-label">{{Identifiant}}</label>
+						<div class="col-sm-3">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" disabled/>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-3 control-label" >{{Objet parent}}</label>
 						<div class="col-sm-3">
 							<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
@@ -41,7 +47,7 @@ foreach (object::all() as $object) {
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{{Catégorie}}</label>
-						<div class="col-sm-9">
+						<div class="col-sm-3">
 							<?php
 foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 	echo '<label class="checkbox-inline">';
@@ -68,6 +74,12 @@ foreach (mjh::findWhos() as $key => $value) {
 }
 								?>
 							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">{{WHERE}}</label>
+						<div class="col-sm-3">
+							<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="where" />
 						</div>
 					</div>
 				</fieldset>

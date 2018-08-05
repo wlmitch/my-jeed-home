@@ -116,6 +116,11 @@ class mjh extends eqLogic {
 
 	public function preSave() {
 		$who = $this->getConfiguration('who');
+		$where = $this->getConfiguration('where');
+
+		$logicalId = $who . ':' . $where;
+
+		$this->setLogicalId($logicalId);
 	}
 
 }
