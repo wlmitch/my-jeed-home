@@ -59,26 +59,56 @@ class Translator {
 	toJson(data) {
 		let who = data.match(/^\*[#]?([0-9]+)\*([0-9*#])*##$/)[1];
 		let translator = this.translators[who];
+		let result = {
+			who: who
+		};
 		if (translator) {
-			translator(data);
+			return translator(data, result);
 		} else {
 			LOGGER.warn("[OpWeNe] Translator not found : " + data);
 		}
+		return result;
 	}
 
-	light(data) {
+	light(data, result) {
 		LOGGER.debug("[OpWeNe] Handling light : " + data);
+		let tab = data.split(/\*|#/);
+		if (tab[1] == 1) {
+			// Status
+			// *1*<what>*<where>##
+			result['what'] = tab[2]; // 0 : Off, 1 : On
+			result['where'] = tab[3];
+		} else if (tab[2] == 1 && tab[4] == 1) {
+			// Intensity
+			// *#1*<where>*1*<level>*<speed>##
+			LOGGER.debug("[OpWeNe] Light translator intensity not translated : " + data);
+		} else if (tab[2] == 1 && tab[4] == 2) {
+			// Temporization
+			// *#1*<where>*2*<hour>*<min>*<sec>##
+			LOGGER.debug("[OpWeNe] Light translator temporization not translated : " + data);
+		} else {
+			LOGGER.warn("[OpWeNe] Light translator not found : " + data);
+		}
 	}
 
-	automation(data) {
+	automation(data, result) {
 		LOGGER.debug("[OpWeNe] Handling automation : " + data);
+		let tab = data.split(/\*|#/);
+		if (tab[1] == 2) {
+			// Status
+			// *2*<what>*<where>##
+			result['what'] = tab[2]; // 0 : Stop, 1 : Up, 2 : Down
+			result['where'] = tab[3];
+		} else {
+			LOGGER.warn("[OpWeNe] Automation translator not found : " + data);
+		}
 	}
 
-	thermoregulation(data) {
+	thermoregulation(data, result) {
 		LOGGER.debug("[OpWeNe] Handling thermoregulation : " + data);
 	}
 
-	energy(data) {
+	energy(data, result) {
 		LOGGER.trace("[OpWeNe] Handling energy : " + data);
 	}
 
