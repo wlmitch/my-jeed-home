@@ -47,12 +47,15 @@ class mjh extends eqLogic {
 		$gatewayAddress = config::byKey('gatewayAddress', 'mjh', '192.168.1.35');
 		$gatewayPort = config::byKey('gatewayPort', 'mjh', '20000');
 		$gatewayPassword = config::byKey('gatewayPassword', 'mjh', '12345');
+		$logLevel = log::convertLogLevel(log::getLogLevel('mjh'));
 		$cmd = 'nice -n 19 nodejs ' . $path .
+				' --logLevel=' . $logLevel .
 				' --serverPort=' . $serverPort .
 				' --gatewayAddress=' . $gatewayAddress .
 				' --gatewayPort=' . $gatewayPort .
 				' --gatewayPassword=' . $gatewayPassword .
 				' --apiKey=' . jeedom::getApiKey('mjh');
+		log::add('mjh', 'debug', $cmd);
 
 		$result = exec('sudo ' . $cmd . ' >> ' . log::getPathToLog('mjh_deamon') . ' 2>&1 &');
 		if (strpos(strtolower($result), 'error') !== false || strpos(strtolower($result), 'traceback') !== false) {

@@ -9,7 +9,7 @@ const argv = require('minimist')(process.argv, {
 	}
 });
 if (argv.level) {
-	process.env.LOG_LEVEL = argv.level;
+	process.env.LOG_LEVEL = argv.logLevel;
 } else {
 	process.env.LOG_LEVEL = 'debug';
 }
