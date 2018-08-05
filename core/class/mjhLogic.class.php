@@ -81,9 +81,30 @@ class mjh extends eqLogic {
     socket_close($socket);
   }
 
+  public static function findWhos() {
+    $path = dirname(__FILE__) . '/../config/who';
+    $files = ls($path, '*.json', false, array('files', 'quiet'));
+    $return = array();
+    foreach ($files as $file) {
+			try {
+				$content = file_get_contents($path . '/' . $file);
+				if (is_json($content)) {
+					$return = array_merge($return, json_decode($content, true));
+				}
+			} catch (Exception $e) {
+        log::add('mjh', 'info', 'unable to read json file');
+        log::add('mjh', 'info', $e);
+			}
+		}
+  }
+
   public static function processEvent($data) {
     log::add('mjh', 'debug', 'Process event');
     log::add('mjh', 'debug', $data);
+  }
+
+  public function preSave() {
+    $device = $this->getConfiguration('device');
   }
 
 }
