@@ -104,6 +104,9 @@ class Deamon {
 	processEvent(data) {
 		LOGGER.trace('[DAEMON] Event : ' + data);
 		let body = translator.toJson(data);
+		if (body.ignore) {
+			return;
+		}
 
 		request({
 				method: 'POST',

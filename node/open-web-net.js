@@ -110,6 +110,7 @@ class Translator {
 
 	energy(data, result) {
 		LOGGER.trace("[OpWeNe] Handling energy : " + data);
+		result['ignore'] = true;
 	}
 
 }
