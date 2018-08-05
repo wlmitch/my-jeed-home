@@ -63,9 +63,10 @@ class Translator {
 			who: who
 		};
 		if (translator) {
-			return translator(data, result);
+			translator(data, result);
 		} else {
 			LOGGER.warn("[OpWeNe] Translator not found : " + data);
+			result['ignore'] = true;
 		}
 		return result;
 	}
