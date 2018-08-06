@@ -87,23 +87,6 @@ foreach (mjh::findWhos() as $key => $value) {
 		</div>
 
 		<!-- Equipement commands -->
-		<div role="tabpanel" class="tab-pane" id="commandtab">
-			<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
-			<table id="table_cmd" class="table table-bordered table-condensed">
-				<thead>
-					<tr>
-						<th style="width: 50px;">#</th>
-						<th style="width: 230px;">{{Nom}}</th>
-						<th style="width: 100px;">{{Type}}</th>
-						<th>{{Commande & Info retour}}</th>
-						<th style="width: 200px;">{{Paramètres}}</th>
-						<th style="width: 80px;"></th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</table>
-		</div>
 		<?php include __DIR__ . '/mjh.command.php' ?>
 
 	</div>

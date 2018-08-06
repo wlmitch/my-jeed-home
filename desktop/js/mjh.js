@@ -1,20 +1,3 @@
-/* This file is part of Jeedom.
- *
- * Jeedom is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Jeedom is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
- */
-
-
 $("#table_cmd").sortable({
 	axis: "y",
 	cursor: "move",
@@ -23,9 +6,19 @@ $("#table_cmd").sortable({
 	tolerance: "intersect",
 	forcePlaceholderSize: true
 });
-/*
- * Fonction pour l'ajout de commande, appellé automatiquement par plugin.template
- */
+
+$('body').delegate('.cmdAttr[data-l1key=type]', 'change', function() {
+	var tr = $(this).closest('tr');
+	var value = $(this).value()
+	if (value == 'info') {
+		tr.find('.cmdAttr[data-l1key=logicalId]').show();
+		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=command]').hide();
+	} else if (value == 'action') {
+		tr.find('.cmdAttr[data-l1key=logicalId]').hide();
+		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=command]').show();
+	}
+});
+
 function addCmdToTable(_cmd) {
 	if (!isset(_cmd)) {
 		var _cmd = {
@@ -48,10 +41,10 @@ function addCmdToTable(_cmd) {
 	$('#table_cmd tbody').append(tr);
 	$('#table_cmd tbody tr:last').setValues(_cmd, '.cmdAttr');
 
-	var tr = $('#table_cmd tbody tr:last');
+	/*var tr = $('#table_cmd tbody tr:last');
 	jeedom.eqLogic.builSelectCmd({
 		id: $(".li_eqLogic.active").attr('data-eqLogic_id'),
-		filter: {type: 'info'},
+		filter: { type: 'info' },
 	  error: function (error) {
 			$('#div_alert').showAlert({message: error.message, level: 'danger'});
 		},
@@ -61,7 +54,7 @@ function addCmdToTable(_cmd) {
 			tr.setValues(_cmd, '.cmdAttr');
 			jeedom.cmd.changeType(tr, init(_cmd.subType));
 		}
-	});
+	});*/
 /*
   if (isset(_cmd.type)) {
 		$('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));

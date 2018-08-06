@@ -1,3 +1,20 @@
+<div role="tabpanel" class="tab-pane" id="commandtab">
+	<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
+	<table id="table_cmd" class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th style="width: 50px;">#</th>
+				<th style="width: 230px;">{{Nom}}</th>
+				<th style="width: 100px;">{{Type}}</th>
+				<th>{{Commande}}</th>
+				<th style="width: 200px;">{{Paramètres}}</th>
+				<th style="width: 80px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
 
 <script id="command-template" type="text/template">
   <tr class="cmd" data-cmd_id="[[id]]">
@@ -9,10 +26,10 @@
         <div>
           <input class="cmdAttr form-control input-sm" data-l1key="name" placeholder="{{Nom}}">
         </div>
-        <div>
-          <label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked=""> {{Afficher}}</label>
-          <label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>
-        </div>
+				<div>
+					<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked="">{{Afficher}}</label>
+					<label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label>
+				</div>
       </div>
     </td>
     <td>
@@ -20,14 +37,12 @@
       <div class="subType" subType="[[subType]]"></div>
     </td>
     <td>
-      <!-- Commande -->
       <div>
-        <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}"/>
+        <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="command" placeholder="{{Commande}}"/>
       </div>
-      <!-- Info (pour le retour d'état) -->
-      <div>
-        <select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" title="Information à mettre à jour">
-      </div>
+			<div>
+				<input class="cmdAttr form-control input-sm" data-l1key="logicalId" placeholder="{{Identifiant logique}}"/>
+			</div>
     </td>
     <td>
       <div>
