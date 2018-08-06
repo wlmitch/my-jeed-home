@@ -1,4 +1,9 @@
 {
   "who": 2,
-  "name": "Automation"
+  "name": "Automation",
+	"what": {
+		"0": "STOP",
+		"1": "UP",
+		"2": "DOWN"
+	}
 }

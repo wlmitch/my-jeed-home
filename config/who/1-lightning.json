@@ -1,4 +1,8 @@
 {
   "who": 1,
-  "name": "Lightning"
+  "name": "Lightning",
+	"what": {
+		"0": "OFF",
+		"1": "ON"
+	}
 }
