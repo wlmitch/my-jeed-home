@@ -115,13 +115,11 @@ class mjh extends eqLogic {
 
 		$logicalId = $data['who'] . ':' . $data['where'];
 		$equipment = mjh::byLogicalId($logicalId, 'mjh');
-		if (!is_object($device)) {
+		if (!is_object($equipment)) {
 			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
-			return;
 		} else {
 			log::add('mjh', 'debug', print_r($equipment, true));
 		}
-
 	}
 
 	public function preSave() {
