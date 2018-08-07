@@ -1,8 +1,13 @@
 {
-  "who": 1,
-  "name": "Lightning",
+	"who": 1,
+	"name": "Lightning",
 	"what": {
 		"0": "OFF",
 		"1": "ON"
-	}
+	},
+	"commands": [
+		{ "name": "On", "type": "action", "subType":"other", "generic_type":"LIGHT_ON", "isVisible":"1", "command": "*1*1*WHERE##" },
+		{ "name": "Off", "type": "action", "subType":"other", "generic_type":"LIGHT_OFF", "isVisible":"1", "command": "*1*0*WHERE##" },
+		{ "name": "Status", "type": "info", "subType":"binary", "generic_type":"LIGHT_STATE", "isVisible":"0", "logicalId": "what" }
+	]
 }

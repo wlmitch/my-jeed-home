@@ -5,5 +5,11 @@
 		"0": "STOP",
 		"1": "UP",
 		"2": "DOWN"
-	}
+	},
+	"commands": [
+		{ "name": "Ouvrir", "type": "action", "subType":"other", "generic_type":"FLAP_UP", "isVisible":"1", "command": "*2*1*WHERE##", "icon": "fa-arrow-up" },
+		{ "name": "Stop", "type": "action", "subType":"other", "generic_type":"FLAP_STOP", "isVisible":"1", "command": "*2*0*WHERE##", "icon": "fa-stop" },
+		{ "name": "Fermer", "type": "action", "subType":"other", "generic_type":"FLAP_DOWN", "isVisible":"1", "command": "*2*1*WHERE##", "icon": "fa-arrow-down" },,
+		{ "name": "Status", "type": "info", "subType":"binary", "generic_type":"FLAP_STATE", "isVisible":"1", "logicalId": "what" }
+	]
 }
