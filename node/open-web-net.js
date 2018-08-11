@@ -103,6 +103,7 @@ class Translator {
 		} else if (tab[1] == 2 && tab[2] == 1000) {
 			// *2*1000#<what>*<where>##
 			LOGGER.debug("[OpWeNe] Automation translator not translated : " + data);
+			result['ignore'] = true;
 		} else {
 			LOGGER.warn("[OpWeNe] Automation translator not found : " + data);
 		}
