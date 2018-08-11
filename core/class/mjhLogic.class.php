@@ -85,17 +85,27 @@ class mjh extends eqLogic {
 		$files = ls($path, '*.json', false, array('files', 'quiet'));
 		$return = array();
 		foreach ($files as $file) {
-			try {
-				$content = file_get_contents($path . '/' . $file);
-				if (is_json($content)) {
+				$content = mjh::readWhoFile($file);
+				if ($content != null) {
 					array_push($return, json_decode($content, true));
 				}
-			} catch (Exception $e) {
-				log::add('mjh', 'info', 'unable to read json file');
-				log::add('mjh', 'info', $e);
-			}
 		}
 		return $return;
+	}
+
+	public static function readWhoFile($file) {
+		$path = dirname(__FILE__) . '/../../config/who';
+		try {
+			$content = file_get_contents($path . '/' . $file);
+			if (is_json($content)) {
+				return $content;
+			} else {
+				return null;
+			}
+		} catch (Exception $e) {
+			log::add('mjh', 'info', 'unable to read who file');
+			log::add('mjh', 'info', $e);
+		}
 	}
 
 	public static function sendCommand($cmd) {
@@ -113,12 +123,27 @@ class mjh extends eqLogic {
 		log::add('mjh', 'debug', 'Process event');
 		log::add('mjh', 'debug', print_r($data, true));
 
-		$logicalId = $data['who'] . ':' . $data['where'];
+		$who = $data['who'];
+		$what = $data['what'];
+		$where = $data['where'];
+
+		$logicalId = $who . ':' . $where;
 		$equipment = mjh::byLogicalId($logicalId, 'mjh');
 		if (!is_object($equipment)) {
 			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
+		} else if ($what != null) {
+			$value = mjh::translate($who, $what);
+			log::add('mjh', 'debug', 'Update "what" with "' . $value . '"');
+			$equipment->checkAndUpdateCmd('what', $value);
+		}
+	}
+
+	public static function translate($who, $what) {
+		$content = mjh::readWhoFile($who . '.json');
+		if ($content != null && $content['what'] != null) {
+			return $content['what'][$what];
 		} else {
-			log::add('mjh', 'debug', print_r($equipment, true));
+			return $what;
 		}
 	}
 
