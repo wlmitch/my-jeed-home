@@ -87,7 +87,7 @@ class mjh extends eqLogic {
 		foreach ($files as $file) {
 				$content = mjh::readWhoFile($file);
 				if ($content != null) {
-					array_push($return, json_decode($content, true));
+					array_push($return, $content);
 				}
 		}
 		return $return;
@@ -98,7 +98,7 @@ class mjh extends eqLogic {
 		try {
 			$content = file_get_contents($path . '/' . $file);
 			if (is_json($content)) {
-				return $content;
+				return json_decode($content, true);
 			} else {
 				return null;
 			}
