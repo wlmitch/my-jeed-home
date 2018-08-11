@@ -95,11 +95,14 @@ class Translator {
 	automation(data, result) {
 		LOGGER.debug("[OpWeNe] Handling automation : " + data);
 		let tab = data.split(/\*|#/);
-		if (tab[1] == 2) {
+		if (tab[1] == 2 && tab[2] != 1000) {
 			// Status
 			// *2*<what>*<where>##
 			result['what'] = tab[2]; // 0 : Stop, 1 : Up, 2 : Down
 			result['where'] = tab[3];
+		} else if (tab[1] == 2 && tab[2] == 1000) {
+			// *2*1000#<what>*<where>##
+			LOGGER.debug("[OpWeNe] Automation translator not translated : " + data);
 		} else {
 			LOGGER.warn("[OpWeNe] Automation translator not found : " + data);
 		}
