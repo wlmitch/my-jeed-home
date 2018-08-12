@@ -133,8 +133,13 @@ class mjh extends eqLogic {
 			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
 		} else if ($what != null) {
 			$value = mjh::translate($who, $what);
-			log::add('mjh', 'debug', 'Update "what" with "' . $value . '"');
+			log::add('mjh', 'debug', 'Update "what" with "' . $value . '" on "' . $logicalId . '"');
 			$equipment->checkAndUpdateCmd('what', $value);
+
+			if ($who == 2) {
+				mjh::handleShutterState($equipment);
+			}
+
 		}
 	}
 
@@ -145,6 +150,57 @@ class mjh extends eqLogic {
 		} else {
 			return $what;
 		}
+	}
+
+	public static function handleShutterState($equipment) {
+		$whatCommand = $equipment->getCmd('info', 'what');
+		$stateCommand = $equipment->getCmd('info', 'state');
+		$positionCommand = $equipment->getCmd('info', 'position');
+
+		if (!$stateCommand) {
+			log::add('mjh', 'debug', '"state" not found');
+			return;
+		}
+		if (!$positionCommand) {
+			log::add('mjh', 'debug', '"position" not found');
+			return;
+		}
+
+		$duration = $whatCommand->getConfiguration('duration');
+		if (!is_numeric($duration)) {
+			$duration = 30;
+		}
+
+		$previousState = $stateCommand->execCmd(null, 2);
+		$previousTimestamp = $stateCommand->getCollectDate();
+		$previousPosition = $positionCommand->execCmd(null, 2);
+
+		$currentState = $whatCommand->execCmd(null, 2);
+		$currentTimestamp = $whatCommand->getCollectDate();
+		$currentDuration = $currentTimestamp - $previousTimestamp;
+
+		$deltaPosition = 100 * $currentDuration / $duration;
+		if ($previousState == 'UP') {
+			$deltaPosition = -$deltaPosition;
+		} else if ($previousState == 'DOWN') {
+			$deltaPosition = $deltaPosition;
+		} else {
+			$deltaPosition = 0;
+		}
+		$currentPosition = bound($previousPosition + $deltaPosition);
+		$equipment->checkAndUpdateCmd('position', $currentPosition);
+
+		if ($currentPosition == 100) {
+			$equipment->checkAndUpdateCmd('state', 'CLOSED');
+		} else if ($currentPosition == 0) {
+			$equipment->checkAndUpdateCmd('state', 'OPEN');
+		} else if ($currentState != 'STOP') {
+			$equipment->checkAndUpdateCmd('state', $currentState);
+		}
+	}
+
+	public static function bound($value) {
+		return max(0, min($value, 100));
 	}
 
 	public function preSave() {
