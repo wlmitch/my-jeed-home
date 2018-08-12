@@ -55,7 +55,7 @@ function addCmdToTable(_cmd) {
 			tr.setValues(_cmd, '.cmdAttr');
 			jeedom.cmd.changeType(tr, init(_cmd.subType));
 		}
-	});*/
+	});
 /*
   if (isset(_cmd.type)) {
 		$('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
