@@ -187,8 +187,13 @@ class mjh extends eqLogic {
 		} else {
 			$deltaPosition = 0;
 		}
+		// 0 -> CLOSED, 100 -> OPEN
 		$currentPosition = mjh::bound($previousPosition + $deltaPosition);
 		$equipment->checkAndUpdateCmd('position', $currentPosition);
+
+		log::add('mjh', 'debug', 'state : ' . $previousState . ' -> ' . $currentState);
+		log::add('mjh', 'debug', ' time : ' . $previousTimestamp . ' -> ' . $currentTimestamp);
+		log::add('mjh', 'debug', 'posit : ' . $previousPosition . ' + ' . $deltaPosition . ' -> ' . $currentPosition);
 
 		if ($currentState != 'UP' && $currentPosition == 0) {
 			$equipment->checkAndUpdateCmd('state', 'CLOSED');
