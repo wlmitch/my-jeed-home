@@ -44,7 +44,7 @@
 				<input class="cmdAttr form-control input-sm" data-l1key="logicalId" placeholder="{{Identifiant logique}}"/>
 			</div>
 			<div>
-				<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="duration" placeholder="{{Durée minimum (ms)}}"/>
+				<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="duration" placeholder="{{Durée en secondes}}"/>
 			</div>
     </td>
     <td>
