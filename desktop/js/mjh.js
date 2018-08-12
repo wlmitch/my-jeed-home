@@ -13,10 +13,12 @@ $('body').delegate('.cmdAttr[data-l1key=type]', 'change', function() {
 	if (value == 'info') {
 		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=command]').hide();
 		tr.find('.cmdAttr[data-l1key=logicalId]').show();
+		tr.find('.cmdAttr[data-l1key=value]').attr('disabled', true);
 		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=duration]').show();
 	} else if (value == 'action') {
 		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=command]').show();
 		tr.find('.cmdAttr[data-l1key=logicalId]').hide();
+		tr.find('.cmdAttr[data-l1key=value]').attr('disabled', false);
 		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=duration]').hide();
 	}
 });
@@ -56,10 +58,5 @@ function addCmdToTable(_cmd) {
 			jeedom.cmd.changeType(tr, init(_cmd.subType));
 		}
 	});
-/*
-  if (isset(_cmd.type)) {
-		$('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
-	}
-	jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
-*/
+
 }
