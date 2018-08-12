@@ -1,6 +1,4 @@
 <div role="tabpanel" class="tab-pane" id="commandtab">
-	<a id="bt_addAction" class="btn btn-success btn-sm pull-right" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Action}}</a><br/><br/>
-	<a id="bt_addInfo" class="btn btn-success btn-sm pull-right" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Info}}</a><br/><br/>
 	<table id="table_cmd" class="table table-bordered table-condensed">
 		<thead>
 			<tr>
@@ -15,6 +13,10 @@
 		<tbody>
 		</tbody>
 	</table>
+	<div>
+		<a id="bt_addAction" class="btn btn-success btn-sm pull-right" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Action}}</a>
+		<a id="bt_addInfo" class="btn btn-success btn-sm pull-right" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Info}}</a>
+	<div>
 </div>
 
 <script id="command-info-template" type="text/template">
