@@ -181,23 +181,23 @@ class mjh extends eqLogic {
 
 		$deltaPosition = 100 * $currentDuration / $duration;
 		if ($previousState == 'UP') {
-			$deltaPosition = -$deltaPosition;
-		} else if ($previousState == 'DOWN') {
 			$deltaPosition = $deltaPosition;
+		} else if ($previousState == 'DOWN') {
+			$deltaPosition = -$deltaPosition;
 		} else {
 			$deltaPosition = 0;
 		}
 		$currentPosition = mjh::bound($previousPosition + $deltaPosition);
 		$equipment->checkAndUpdateCmd('position', $currentPosition);
 
-		if ($currentState != 'UP' && $currentPosition == 100) {
+		if ($currentState != 'UP' && $currentPosition == 0) {
 			$equipment->checkAndUpdateCmd('state', 'CLOSED');
-		} else if ($currentState != 'DOWN' && $currentPosition == 0) {
+		} else if ($currentState != 'DOWN' && $currentPosition == 100) {
 			$equipment->checkAndUpdateCmd('state', 'OPEN');
 		} else {
 			$equipment->checkAndUpdateCmd('state', $currentState);
 		}
-		
+
 	}
 
 	public static function bound($value) {
