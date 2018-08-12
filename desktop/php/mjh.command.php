@@ -41,6 +41,9 @@
         <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="command" placeholder="{{Commande}}"/>
       </div>
 			<div>
+				<select class="cmdAttr form-control input-sm" data-l1key="value" title="Information de la valeur"></select>
+			</div>
+			<div>
 				<input class="cmdAttr form-control input-sm" data-l1key="logicalId" placeholder="{{Identifiant logique}}"/>
 			</div>
 			<div>
