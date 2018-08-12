@@ -7,19 +7,24 @@ $("#table_cmd").sortable({
 	forcePlaceholderSize: true
 });
 
-$('body').delegate('.cmdAttr[data-l1key=type]', 'change', function() {
-	var tr = $(this).closest('tr');
-	var value = $(this).value()
-	if (value == 'info') {
-		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=command]').hide();
-		tr.find('.cmdAttr[data-l1key=logicalId]').show();
-		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=duration]').show();
-	} else if (value == 'action') {
-		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=command]').show();
-		tr.find('.cmdAttr[data-l1key=logicalId]').hide();
-		tr.find('.cmdAttr[data-l1key=configuration][data-l2key=duration]').hide();
-	}
+$('#bt_addAction').on('click', function() {
+	addCmdToTable({
+		type: 'action'
+	});
 });
+$('#bt_addInfo').on('click', function() {
+	addCmdToTable({
+		type: 'info'
+	});
+});
+
+function findTemplate(_cmd) {
+	if (init(_cmd.type) == 'info') {
+		return $("#command-info-template").html();
+	} else if (init(_cmd.type) == 'action')  {
+		return $("#command-action-template").html();
+	}
+}
 
 function addCmdToTable(_cmd) {
 	if (!isset(_cmd)) {
@@ -33,11 +38,10 @@ function addCmdToTable(_cmd) {
 
 	var data = {
 		id: init(_cmd.id),
-		type: init(_cmd.type),
-		types: jeedom.cmd.availableType(),
 		subtype: init(_cmd.subType)
 	};
-	var template = $("#command-template").html();
+
+	var template = findTemplate(_cmd);
 	var tr = Mustache.render(template, data);
 
 	$('#table_cmd tbody').append(tr);
