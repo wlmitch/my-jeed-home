@@ -172,11 +172,11 @@ class mjh extends eqLogic {
 		}
 
 		$previousState = $stateCommand->execCmd(null, 2);
-		$previousTimestamp = $stateCommand->getCollectDate();
+		$previousTimestamp = strtotime($stateCommand->getCollectDate());
 		$previousPosition = $positionCommand->execCmd(null, 2);
 
 		$currentState = $whatCommand->execCmd(null, 2);
-		$currentTimestamp = $whatCommand->getCollectDate();
+		$currentTimestamp = strtotime($whatCommand->getCollectDate());
 		$currentDuration = $currentTimestamp - $previousTimestamp;
 
 		$deltaPosition = 100 * $currentDuration / $duration;
@@ -194,9 +194,10 @@ class mjh extends eqLogic {
 			$equipment->checkAndUpdateCmd('state', 'CLOSED');
 		} else if ($currentState != 'DOWN' && $currentPosition == 0) {
 			$equipment->checkAndUpdateCmd('state', 'OPEN');
-		} else if ($currentState != 'STOP') {
+		} else {
 			$equipment->checkAndUpdateCmd('state', $currentState);
 		}
+		
 	}
 
 	public static function bound($value) {
