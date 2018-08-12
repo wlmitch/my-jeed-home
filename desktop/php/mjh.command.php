@@ -14,9 +14,11 @@
 		</tbody>
 	</table>
 	<div>
-		<a id="bt_addAction" class="btn btn-success btn-sm pull-right" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Action}}</a>
-		<a id="bt_addInfo" class="btn btn-success btn-sm pull-right" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Info}}</a>
-	<div>
+		<div class="btn-group pull-right">
+  		<button id="bt_addAction" type="button" class="btn btn-sm btn-success"><i class="fa fa-plus-circle"></i> {{Action}}</button>
+  		<button id="bt_addInfo" type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus-circle"></i> {{Info}}</button>
+		</div>
+	</div>
 </div>
 
 <script id="command-info-template" type="text/template">
