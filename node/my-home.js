@@ -67,6 +67,12 @@ class Gateway extends EventEmitter {
 		this.eventSocket.on('closed', () => LOGGER.info('[MYHOME] Gateway closed'));
 		this.eventSocket.on('error', (message) => this.emit('error', message));
 		this.eventSocket.open();
+
+		this.timeout = setTimeout(() => {
+			LOGGER.debug('[MYHOME] Rebooting event socket');
+			this.close();
+			this.open();
+		}, 1 * 60 * 60 * 1000); // Every hours
 	}
 
 	send(command, callback) {
@@ -86,6 +92,7 @@ class Gateway extends EventEmitter {
 	close() {
 		LOGGER.debug('[MYHOME] Closing gateway');
 		this.eventSocket.close();
+		clearTimeout(this.timeout);
 	}
 
 }
