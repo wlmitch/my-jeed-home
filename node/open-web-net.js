@@ -67,11 +67,13 @@ class Translator {
 
 	toResult(data) {
 		if (data.startsWith('*#') && data.endsWith('##')) {
-			// *#<who>*<where>*<dimension>*<val_1>*...*<val_n>##
+			// *#<who>*<where>#<par_1>#...#<par_n>*<dimension>*<val_1>*...*<val_n>##
 			let tab = data.substring(2, data.length - 2).split(/\*/);
+			let whereTab = tab[1].split(/#/);
 			return {
 				who: tab[0],
-				where: tab[1],
+				where: whereTab[0],
+				whereParams: whereTab.slice(1),
 				dimension: tab[2],
 				dimensionValues: tab.slice(3)
 			};
