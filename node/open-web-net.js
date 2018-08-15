@@ -56,7 +56,7 @@ class Translator {
 	}
 
 	toJson(data) {
-		let result = toResult(data);
+		let result = this.toResult(data);
 		let translator = this.translators[result.who];
 		if (translator) {
 			translator(result);
