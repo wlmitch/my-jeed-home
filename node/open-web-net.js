@@ -16,12 +16,13 @@ LOGGER.setLevel(process.env.LOG_LEVEL);
 const MESSAGE_BEGIN = '*'
 const MESSAGE_END = '##'
 
-const MESSAGE_ACK = MESSAGE_BEGIN + '#*1' + MESSAGE_END
-const MESSAGE_NACK = MESSAGE_BEGIN + '#*0' + MESSAGE_END
-const MESSAGE_NORMAL = MESSAGE_BEGIN + 'WHO*WHAT*WHERE' + MESSAGE_END
-const MESSAGE_STATUS_REQUEST = MESSAGE_BEGIN + '#WHO*WHERE' + MESSAGE_END
-const MESSAGE_DIMENSION_REQUEST = MESSAGE_BEGIN + '#WHO*WHERE*DIMENSION' + MESSAGE_END
-const MESSAGE_DIMENSION_WRITING = MESSAGE_BEGIN + '#WHO*WHERE*#DIMENSION*VAL1*...*VALN' + MESSAGE_END
+const MESSAGE_ACK = '*#*1##'
+const MESSAGE_NACK = '*#*0##'
+//const MESSAGE_STATUS_REQUEST = '*#<who>*<where>##'
+const MESSAGE_STATUS = '*<who>*<what>*<where>##'
+//const MESSAGE_DIMENSION_REQUEST = '*#<who>*<where>*<dimension>##'
+//const MESSAGE_DIMENSION_WRITING = '*#<who>*<where>*#<dimension>*<val_1>*...*<val_n>##'
+const MESSAGE_DIMENSION = '*#<who>*<where>*<dimension>*<val_1>*...*<val_n>##'
 
 const TAG_WHO = ''
 //  0 - Scenario
@@ -37,8 +38,8 @@ const TAG_WHO = ''
 // 22 - Sound
 // 24 - Light management
 // 25 - CEN+ / Dry contact
-const TAG_WHAT = 'WHAT#PAR1#PAR2#...#PARN'
-const TAG_WHERE = 'WHERE#PAR1#PAR2#...#PARN'
+const TAG_WHAT = '<what>#<par_1>#...#<par_n>'
+const TAG_WHERE = '<where>#<par_1>#...#<par_n>'
 
 // ##############
 // # Translator #
@@ -49,73 +50,59 @@ class Translator {
 
 	constructor() {
 		this.translators = {
-			1: this.light,
 			2: this.automation,
-			4: this.thermoregulation,
 			18: this.energy
 		}
 	}
 
 	toJson(data) {
-		let who = data.match(/^\*[#]?([0-9]+)\*([0-9*#])*##$/)[1];
-		let translator = this.translators[who];
-		let result = {
-			who: who
-		};
+		let result = toResult(data);
+		let translator = this.translators[result.who];
 		if (translator) {
-			translator(data, result);
-		} else {
-			LOGGER.warn("[OpWeNe] Translator not found : " + data);
-			result['ignore'] = true;
+			translator(result);
 		}
+		LOGGER.warn('[OpWeNe] Result ' + JSON.stringify(result));
 		return result;
 	}
 
-	light(data, result) {
-		LOGGER.debug("[OpWeNe] Handling light : " + data);
-		let tab = data.split(/\*|#/);
-		if (tab[1] == 1) {
-			// Status
-			// *1*<what>*<where>##
-			result['what'] = tab[2]; // 0 : Off, 1 : On
-			result['where'] = tab[3];
-		} else if (tab[2] == 1 && tab[4] == 1) {
-			// Intensity
-			// *#1*<where>*1*<level>*<speed>##
-			LOGGER.debug("[OpWeNe] Light translator intensity not translated : " + data);
-		} else if (tab[2] == 1 && tab[4] == 2) {
-			// Temporization
-			// *#1*<where>*2*<hour>*<min>*<sec>##
-			LOGGER.debug("[OpWeNe] Light translator temporization not translated : " + data);
+	toResult(data) {
+		if (data.startsWith('*#') && data.endsWith('##')) {
+			// *#<who>*<where>*<dimension>*<val_1>*...*<val_n>##
+			let tab = data.substring(2, data.length - 2).split(/\*/);
+			return {
+				who: tab[0],
+				where: tab[1],
+				dimension: tab[2],
+				dimensionValues: tab.slice(3)
+			};
+		} else if (data.startsWith('*') && data.endsWith('##')) {
+			// *<who>*<what>#<par_1>#...#<par_n>*<where>#<par_1>#...#<par_n>##
+			let tab = data.substring(1, data.length - 2).split(/\*/);
+			let whatTab = tab[1].split(/#/);
+			let whereTab = tab[2].split(/#/);
+			return {
+				who: tab[0],
+				where: whereTab[0],
+				whereParams: whereTab.slice(1),
+				what: whatTab[0],
+				whatParams: whatTab.slice(1)
+			};
 		} else {
-			LOGGER.warn("[OpWeNe] Light translator not found : " + data);
+			LOGGER.warn('[OpWeNe] Unknown message : ' + data);
+			return {
+				ignore: true
+			};
 		}
 	}
 
-	automation(data, result) {
-		LOGGER.debug("[OpWeNe] Handling automation : " + data);
-		let tab = data.split(/\*|#/);
-		if (tab[1] == 2 && tab[2] != 1000) {
-			// Status
-			// *2*<what>*<where>##
-			result['what'] = tab[2]; // 0 : Stop, 1 : Up, 2 : Down
-			result['where'] = tab[3];
-		} else if (tab[1] == 2 && tab[2] == 1000) {
-			// *2*1000#<what>*<where>##
-			LOGGER.debug("[OpWeNe] Automation translator not translated : " + data);
-			result['ignore'] = true;
-		} else {
-			LOGGER.warn("[OpWeNe] Automation translator not found : " + data);
+	automation(result) {
+		if (result.what == 1000) {
+			result.ignore = true;
 		}
 	}
 
-	thermoregulation(data, result) {
-		LOGGER.debug("[OpWeNe] Handling thermoregulation : " + data);
-	}
-
-	energy(data, result) {
-		LOGGER.trace("[OpWeNe] Handling energy : " + data);
-		result['ignore'] = true;
+	energy(result) {
+		result.ignore = true;
 	}
 
 }
