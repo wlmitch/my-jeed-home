@@ -61,7 +61,7 @@ class Translator {
 		if (translator) {
 			translator(result);
 		}
-		LOGGER.warn('[OpWeNe] Result ' + JSON.stringify(result));
+		LOGGER.debug('[OpWeNe] Result ' + JSON.stringify(result));
 		return result;
 	}
 
