@@ -51,7 +51,8 @@ class Translator {
 	constructor() {
 		this.translators = {
 			2: this.automation,
-			18: this.energy
+			18: this.ignore,
+			1022: this.ignore
 		}
 	}
 
@@ -61,7 +62,11 @@ class Translator {
 		if (translator) {
 			translator(result);
 		}
-		LOGGER.debug('[OpWeNe] Result ' + JSON.stringify(result));
+		if (result.ignore) {
+			LOGGER.trace('[OpWeNe] Result ' + JSON.stringify(result));
+		} else {
+			LOGGER.debug('[OpWeNe] Result ' + JSON.stringify(result));
+		}
 		return result;
 	}
 
@@ -103,7 +108,7 @@ class Translator {
 		}
 	}
 
-	energy(result) {
+	ignore(result) {
 		result.ignore = true;
 	}
 
