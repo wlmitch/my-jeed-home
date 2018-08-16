@@ -141,9 +141,13 @@ class mjh extends eqLogic {
 				mjh::handleShutterState($equipment);
 			}
 		} else if ($equipment != null) {
-			$value = $data['dimensionValues'];
-			log::add('mjh', 'debug', 'Update "dimentions_' . $dimension . '" with "' . $data['dimensionValues'] . '" on "' . $logicalId . '"');
-			$equipment->checkAndUpdateCmd('dimentions_' . $dimension, $value);
+			$values = $data['dimensionValues'];
+			for ($i = 0, $count = count($values); $i < $count; $i++) {
+				$name = 'dimentions_' . $dimension . '_' . $i;
+				$value = $values[$i];
+				log::add('mjh', 'debug', 'Update "' . $name . '" with "' . $value . '" on "' . $logicalId . '"');
+				$equipment->checkAndUpdateCmd('dimentions_' . $dimension . '_' . $i, $value);
+			}
 		}
 	}
 
