@@ -143,10 +143,10 @@ class mjh extends eqLogic {
 		} else if ($equipment != null) {
 			$values = $data['dimensionValues'];
 			for ($i = 0, $count = count($values); $i < $count; $i++) {
-				$name = 'dimentions_' . $dimension . '_' . $i;
+				$name = 'dimension_' . $dimension . '_' . $i;
 				$value = $values[$i];
 				log::add('mjh', 'debug', 'Update "' . $name . '" with "' . $value . '" on "' . $logicalId . '"');
-				$equipment->checkAndUpdateCmd('dimentions_' . $dimension . '_' . $i, $value);
+				$equipment->checkAndUpdateCmd('dimension_' . $dimension . '_' . $i, $value);
 			}
 		}
 	}
