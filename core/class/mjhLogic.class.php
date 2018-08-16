@@ -126,6 +126,7 @@ class mjh extends eqLogic {
 		$who = $data['who'];
 		$what = $data['what'];
 		$where = $data['where'];
+		$dimension = $data['dimension'];
 
 		$logicalId = $who . ':' . $where;
 		$equipment = mjh::byLogicalId($logicalId, 'mjh');
@@ -139,7 +140,10 @@ class mjh extends eqLogic {
 			if ($who == 2) {
 				mjh::handleShutterState($equipment);
 			}
-
+		} else if ($equipment != null) {
+			$value = $data['dimensionValues'];
+			log::add('mjh', 'debug', 'Update "dimentions_' . $dimension . '" with "' . $data['dimensionValues'] . '" on "' . $logicalId . '"');
+			$equipment->checkAndUpdateCmd('dimentions_' . $dimension, $value);
 		}
 	}
 
