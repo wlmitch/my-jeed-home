@@ -123,11 +123,12 @@ class mjh extends eqLogic {
 		log::add('mjh', 'debug', 'Process event');
 		log::add('mjh', 'debug', print_r($data, true));
 
-		$equipment = mjh::byLogicalId($data['who'] . ':' . $data['where'], 'mjh');
+		$logicalId = $data['who'] . ':' . $data['where'];
+		$equipment = mjh::byLogicalId($logicalId, 'mjh');
 		if (is_object($equipment)) {
 			$equipment->processData($data);
 		} else {
-			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
+			log::add('mjh', 'warning', 'No equipement for id "' . $logicalId . '"');
 		}
 	}
 
@@ -162,7 +163,7 @@ class mjh extends eqLogic {
 		if ($this->checkAndUpdateCmd($commandLogicalId, $value, date('Y-m-d H:i:s'))) {
 			log::add('mjh', 'debug', '[UPDATE] Equipement "' . $logicalId . '", info "' . $commandLogicalId . '" : "' . $value . '"');
 		} else {
-			log::add('mjh', 'warn', '[NOT FOUND] Equipement "' . $logicalId . '", info "' . $commandLogicalId . '" : "' . $value . '"');
+			log::add('mjh', 'warning', '[NOT FOUND] Equipement "' . $logicalId . '", info "' . $commandLogicalId . '" : "' . $value . '"');
 		}
 	}
 

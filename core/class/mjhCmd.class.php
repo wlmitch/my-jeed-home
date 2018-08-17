@@ -10,7 +10,7 @@ class mjhCmd extends cmd {
 	}
 
 	public function findCommand() {
-		return str_replace('<where>', $this->getConfiguration()['where'], $this->getConfiguration()['command']);
+		return str_replace('<where>', $this->getEqLogic()->getConfiguration()['where'], $this->getConfiguration()['command']);
 	}
 
 }
