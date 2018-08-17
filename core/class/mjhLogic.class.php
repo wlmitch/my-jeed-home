@@ -123,35 +123,50 @@ class mjh extends eqLogic {
 		log::add('mjh', 'debug', 'Process event');
 		log::add('mjh', 'debug', print_r($data, true));
 
+		$equipment = mjh::byLogicalId($data['who'] . ':' . $data['where'], 'mjh');
+		if (is_object($equipment)) {
+			$equipment->processEvent($data);
+		} else {
+			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
+		}
+	}
+
+	public function processEvent($data) {
+		$this->processWhat($data);
+		$this->processDimension($data);
+	}
+
+	public function processWhat($data) {
 		$who = $data['who'];
 		$what = $data['what'];
-		$where = $data['where'];
-		$dimension = $data['dimension'];
-
-		$logicalId = $who . ':' . $where;
-		$equipment = mjh::byLogicalId($logicalId, 'mjh');
-		if (!is_object($equipment)) {
-			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
-		} else if ($what != null) {
-			$value = mjh::translate($who, $what);
-			log::add('mjh', 'debug', 'Update "what" with "' . $value . '" on "' . $logicalId . '"');
-			$equipment->checkAndUpdateCmd('what', $value);
-
+		if ($what != null) {
+			$this->updateCommand('what', $this->translate($who, $what));
 			if ($who == 2) {
-				mjh::handleShutterState($equipment);
-			}
-		} else if ($equipment != null) {
-			$values = $data['dimensionValues'];
-			for ($i = 0, $count = count($values); $i < $count; $i++) {
-				$name = 'dimension_' . $dimension . '_' . $i;
-				$value = $values[$i];
-				log::add('mjh', 'debug', 'Update "' . $name . '" with "' . $value . '" on "' . $logicalId . '"');
-				$equipment->checkAndUpdateCmd('dimension_' . $dimension . '_' . $i, $value);
+				$this->handleShutterState();
 			}
 		}
 	}
 
-	public static function translate($who, $what) {
+	public function processDimension($data) {
+		$dimension = $data['dimension'];
+		if ($dimension != null) {
+			$values = $data['dimensionValues'];
+			for ($i = 0, $count = count($values); $i < $count; $i++) {
+				$this->updateCommand('dimension_' . $dimension . '_' . $i, $values[$i]);
+			}
+		}
+	}
+
+	public function updateCommand($commandLogicalId, $value) {
+		$logicalId = $this->getLogicalId();
+		if ($this->checkAndUpdateCmd($commandLogicalId, $value, date('Y-m-d H:i:s'))) {
+			log::add('mjh', 'debug', '[UPDATE] Equipement "' . $logicalId . '", info "' . $commandLogicalId . '" : "' . $value . '"');
+		} else {
+			log::add('mjh', 'warn', '[NOT FOUND] Equipement "' . $logicalId . '", info "' . $commandLogicalId . '" : "' . $value . '"');
+		}
+	}
+
+	public function translate($who, $what) {
 		$content = mjh::readWhoFile($who . '.json');
 		if ($content != null && $content['what'] != null) {
 			return $content['what'][$what];
@@ -160,10 +175,10 @@ class mjh extends eqLogic {
 		}
 	}
 
-	public static function handleShutterState($equipment) {
-		$whatCommand = $equipment->getCmd('info', 'what');
-		$stateCommand = $equipment->getCmd('info', 'state');
-		$positionCommand = $equipment->getCmd('info', 'position');
+	public function handleShutterState() {
+		$whatCommand = $this->getCmd('info', 'what');
+		$stateCommand = $this->getCmd('info', 'state');
+		$positionCommand = $this->getCmd('info', 'position');
 
 		if (!$stateCommand) {
 			log::add('mjh', 'debug', '"state" not found');
@@ -196,25 +211,20 @@ class mjh extends eqLogic {
 			$deltaPosition = 0;
 		}
 		// 0 -> CLOSED, 100 -> OPEN
-		$currentPosition = mjh::bound($previousPosition + $deltaPosition);
-		$equipment->checkAndUpdateCmd('position', $currentPosition);
+		$currentPosition = max(0, min($previousPosition + $deltaPosition, 100));
+		$this->updateCommand('position', $currentPosition);
 
 		log::add('mjh', 'debug', 'state : ' . $previousState . ' -> ' . $currentState);
 		log::add('mjh', 'debug', ' time : ' . $previousTimestamp . ' -> ' . $currentTimestamp);
 		log::add('mjh', 'debug', 'posit : ' . $previousPosition . ' + ' . $deltaPosition . ' -> ' . $currentPosition);
 
 		if ($currentState != 'UP' && $currentPosition == 0) {
-			$equipment->checkAndUpdateCmd('state', 'CLOSED');
+			$this->updateCommand('state', 'CLOSED');
 		} else if ($currentState != 'DOWN' && $currentPosition == 100) {
-			$equipment->checkAndUpdateCmd('state', 'OPEN');
+			$this->updateCommand('state', 'OPEN');
 		} else {
-			$equipment->checkAndUpdateCmd('state', $currentState);
+			$this->updateCommand('state', $currentState);
 		}
-
-	}
-
-	public static function bound($value) {
-		return max(0, min($value, 100));
 	}
 
 	public function preSave() {
