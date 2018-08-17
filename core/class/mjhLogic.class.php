@@ -125,13 +125,13 @@ class mjh extends eqLogic {
 
 		$equipment = mjh::byLogicalId($data['who'] . ':' . $data['where'], 'mjh');
 		if (is_object($equipment)) {
-			$equipment->processEvent($data);
+			$equipment->processData($data);
 		} else {
 			log::add('mjh', 'debug', 'No equipement for id "' . $logicalId . '"');
 		}
 	}
 
-	public function processEvent($data) {
+	public function processData($data) {
 		$this->processWhat($data);
 		$this->processDimension($data);
 	}
