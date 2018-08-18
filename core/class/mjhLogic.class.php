@@ -141,7 +141,7 @@ class mjh extends eqLogic {
 		$who = $data['who'];
 		$what = $data['what'];
 		if ($what != null) {
-			$this->updateCommand('what', $this->translate($who, $what));
+			$this->updateCommand('what', $this->translate($who, 'what', $what));
 			if ($who == 2) {
 				$this->handleShutterState();
 			}
@@ -149,11 +149,14 @@ class mjh extends eqLogic {
 	}
 
 	public function processDimension($data) {
+		$who = $data['who'];
 		$dimension = $data['dimension'];
 		if ($dimension != null) {
 			$values = $data['dimensionValues'];
 			for ($i = 0, $count = count($values); $i < $count; $i++) {
-				$this->updateCommand('dimension_' . $dimension . '_' . $i, $values[$i]);
+				$commandLogicalId = 'dimension_' . $dimension . '_' . $i;
+				$value = $this->translate($who, $commandLogicalId, $values[$i]);
+				$this->updateCommand($commandLogicalId, $value);
 			}
 		}
 	}
@@ -167,12 +170,12 @@ class mjh extends eqLogic {
 		}
 	}
 
-	public function translate($who, $what) {
+	public function translate($who, $commandLogicalId, $value) {
 		$content = mjh::readWhoFile($who . '.json');
-		if ($content != null && $content['what'] != null) {
-			return $content['what'][$what];
+		if ($content != null && $content[$commandLogicalId] != null) {
+			return $content[$commandLogicalId][$value];
 		} else {
-			return $what;
+			return $value;
 		}
 	}
 
