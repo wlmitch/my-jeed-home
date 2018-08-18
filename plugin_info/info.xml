@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+	<id>mjh</id>
+	<name>MyJeedHome</name>
+	<description>Plugin for managing a Legrand MyHome installation</description>
+	<icon>fa fa-rebel</icon>
+	<licence>AGPL</licence>
+	<author>Alexandre JANNOTTA</author>
+	<installation>Aucune</installation>
+	<require>3.2</require>
+	<version>0.1</version>
+	<category>automation protocol</category>
+	<allowRemote>1</allowRemote>
+	<hasOwnDeamon>1</hasOwnDeamon>
+	<hasDependency>1</hasDependency>
+</info>

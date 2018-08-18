@@ -91,7 +91,7 @@
     </td>
     <td>
       <div>
-        <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="command" placeholder="{{Commande}}"/>
+        <input class="cmdAttr form-control input-sm" data-l1key="logicalId" placeholder="{{Commande}}"/>
       </div>
 			<div>
 				<select class="cmdAttr form-control input-sm" data-l1key="value" title="Information de la valeur">
