@@ -102,7 +102,7 @@ class Deamon {
 	}
 
 	processEvent(data) {
-		LOGGER.trace('[DAEMON] Event : ' + data);
+		LOGGER.debug('[DAEMON] Event : ' + data);
 		let body = translator.toJson(data);
 		if (body.ignore) {
 			return;
@@ -115,7 +115,7 @@ class Deamon {
 				body: body
 			}, (error, response, body) => {
 			if(!error && response.statusCode == 200) {
-				LOGGER.debug('[DAEMON] Jeedom respond OK');
+				LOGGER.trace('[DAEMON] Jeedom respond OK');
 			} else {
 				LOGGER.error('[DEAMON] Jeedom response : ' + response.statusCode + ' : ' + error);
 			}
