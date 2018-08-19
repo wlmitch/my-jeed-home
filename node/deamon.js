@@ -5,7 +5,8 @@ const argv = require('minimist')(process.argv, {
 		gatewayAddress: '192.168.1.35',
 		gatewayPassword: '12345',
 		apiAddress: '127.0.0.1',
-		apiKey: '000000'
+		apiKey: '000000',
+		disableRequest: false
 	}
 });
 if (argv.logLevel) {
@@ -83,7 +84,7 @@ class Deamon {
 		LOGGER.debug('[DEAMON] Starting gateway');
 		let gatewayConfig = new myHome.GatewayConfig(argv['gatewayPort'], argv['gatewayAddress'], argv['gatewayPassword']);
 		this.gateway = new myHome.Gateway(gatewayConfig);
-		this.gateway.on('event', (data) => this.processEvent(data));
+		this.gateway.on('event', (data) => this.processEventAsync(data));
 		this.gateway.on('error', (message) => {
 			LOGGER.debug('[DEAMON] Gateway error : ' + message);
 			this.stop();
@@ -101,25 +102,36 @@ class Deamon {
 		}
 	}
 
+	processEventAsync(data) {
+		// delay to avoid missing I/O
+		setTimeout(() => this.processEvent(data), 0);
+	}
+
 	processEvent(data) {
 		LOGGER.debug('[DAEMON] Event : ' + data);
 		let body = translator.toJson(data);
 		if (body.ignore) {
 			return;
 		}
+		if (argv['disableRequest']) {
+			return;
+		}
 
-		request({
+		request(
+			{
 				method: 'POST',
 				url: 'http://' + argv['apiAddress'] + '/plugins/mjh/core/php/mjh.php?apiKey=' + argv['apiKey'],
 				json: true,
 				body: body
-			}, (error, response, body) => {
-			if(!error && response.statusCode == 200) {
-				LOGGER.trace('[DAEMON] Jeedom respond OK');
-			} else {
-				LOGGER.error('[DEAMON] Jeedom response : ' + response.statusCode + ' : ' + error);
+			},
+			(error, response, body) => {
+				if(!error && response.statusCode == 200) {
+					LOGGER.trace('[DAEMON] Jeedom respond OK');
+				} else {
+					LOGGER.error('[DEAMON] Jeedom response : ' + response.statusCode + ' : ' + error);
+				}
 			}
-		});
+		);
 	}
 
 	stop() {
