@@ -27,8 +27,8 @@ class Translator {
 	constructor() {
 		this.translators = {
 			//  0 - Scenario
-			//  1 - Light
-			2: this.automation, // Automation
+			1: this.ignoreThousand, // Light
+			2: this.ignoreThousand, // Automation
 			13: this.ignore, // Gateway
 			//  4 - Thermoregulation
 			//  5 - Alarm
@@ -89,7 +89,7 @@ class Translator {
 		}
 	}
 
-	automation(result) {
+	ignoreThousand(result) {
 		if (result.what == 1000) {
 			result.ignore = true;
 		}
