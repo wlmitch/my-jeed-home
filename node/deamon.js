@@ -147,7 +147,7 @@ class Deamon {
 				clearTimeout(this.timeouts[body.where]);
 				delete this.timeouts[body.where];
 			} else if (body.what == 1 || body.what == 2) { // up || down
-				this.timeouts[body.where] = setTimeout(() => this.processRequest(body), 500);
+				this.timeouts[body.where] = setTimeout(() => this.processRequest(body), 1000);
 				LOGGER.debug('[DAEMON] set timeout : ' + this.timeouts[body.where]);
 			}
 		}
