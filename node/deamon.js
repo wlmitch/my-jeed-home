@@ -49,6 +49,7 @@ let translator = new OpenWebNet.Translator();
 class Deamon {
 
 	constructor() {
+		this.timeouts = {};
 	}
 
 	start() {
@@ -116,6 +117,11 @@ class Deamon {
 		if (argv['disableRequest']) {
 			return;
 		}
+		this.processRequest(body);
+	}
+
+	processRequest(body) {
+		this.scheduleShutterRequests(body);
 
 		request(
 			{
@@ -132,6 +138,19 @@ class Deamon {
 				}
 			}
 		);
+	}
+
+	scheduleShutterRequests(body) {
+		if (body.who == 2) {
+			if (body.what == 0) { // stop
+				LOGGER.debug('[DAEMON] clear timeout : ' + this.timeouts[body.where]);
+				clearTimeout(this.timeouts[body.where]);
+				delete this.timeouts[body.where];
+			} else if (body.what == 1 || body.what == 2) { // up || down
+				this.timeouts[body.where] = setTimeout(() => this.processRequest(body), 500);
+				LOGGER.debug('[DAEMON] set timeout : ' + this.timeouts[body.where]);
+			}
+		}
 	}
 
 	stop() {
