@@ -109,7 +109,7 @@ class Deamon {
 	}
 
 	processEvent(data) {
-		LOGGER.debug('[DAEMON] Event : ' + data);
+		LOGGER.trace('[DAEMON] Event : ' + data);
 		let body = translator.toJson(data);
 		if (body.ignore) {
 			return;
